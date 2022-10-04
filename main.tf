@@ -69,12 +69,23 @@ resource "pingone_environment" "env_instance" {
 data "pingone_role" "identity_data_admin" {
   name = "Identity Data Admin"
 }
+data "pingone_role" "environment_admin" {
+  name = "Environment Admin"
+}
 
-resource "pingone_role_assignment_user" "admin_role" {
+resource "pingone_role_assignment_user" "identity_data_admin_role" {
   # count                = var.admin_user_id != "" && var.admin_environment_id != "" ? 1 : 0
   environment_id       = var.admin_environment_id
   user_id              = var.admin_user_id
   role_id              = data.pingone_role.identity_data_admin.id
+  scope_environment_id = pingone_environment.env_instance.id
+}
+
+resource "pingone_role_assignment_user" "environment_admin_role" {
+  # count                = var.admin_user_id != "" && var.admin_environment_id != "" ? 1 : 0
+  environment_id       = var.admin_environment_id
+  user_id              = var.admin_user_id
+  role_id              = data.pingone_role.environment_admin.id
   scope_environment_id = pingone_environment.env_instance.id
 }
 
