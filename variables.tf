@@ -1,6 +1,11 @@
 
-variable "license_id" {
-  description = "PingOne License ID"
+variable "organization_id" {
+  description = "PingOne Organization ID"
+  type        = string
+}
+
+variable "license_name" {
+  description = "PingOne License Name"
   type        = string
 }
 

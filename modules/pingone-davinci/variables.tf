@@ -6,7 +6,7 @@ variable "flow_url" {
 }
 
 variable "connection" {
-  description = "DaVinci Connection Info"
+  description = "DaVinci Connection Info (Name, ID)"
   type = object({
     name = string
     id   = string

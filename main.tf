@@ -1,11 +1,19 @@
 
 
+data "pingone_licenses" "org_licenses" {
+  organization_id = var.organization_id
+
+  data_filter {
+    name   = "name"
+    values = [var.license_name]
+  }
+}
 
 resource "pingone_environment" "env_instance" {
   name        = var.target_environment_name
   description = var.target_environment_description
   type        = "SANDBOX"
-  license_id  = var.license_id
+  license_id  = data.pingone_licenses.org_licenses.ids[0]
 
   default_population {
     name        = "My Population"
