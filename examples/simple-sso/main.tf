@@ -13,7 +13,7 @@ provider "pingone" {
 module "pingone_environment" {
   source = "../../"
 
-  target_environment_name = "TF-terry-test"
+  target_environment_name = var.target_environment_name
 
   organization_id      = var.organization_id
   license_name         = var.license_name

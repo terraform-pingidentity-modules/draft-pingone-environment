@@ -13,6 +13,10 @@ variable "license_name" {
   type        = string
 }
 
+variable "target_environment_name" {
+  description = "PingOne Target Environment Name"
+  type        = string
+}
 variable "admin_environment_id" {
   description = "PingOne Adminstrators Environment ID"
   type        = string
