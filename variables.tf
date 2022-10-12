@@ -1,16 +1,22 @@
 
 variable "organization_id" {
-  description = "PingOne Organization ID"
+  description = "PingOne Organization ID - Used to obtain license_id"
   type        = string
 }
 
 variable "license_name" {
-  description = "PingOne License Name"
+  description = "PingOne License Name - Used to obtain license_id"
   type        = string
 }
 
 variable "admin_environment_id" {
   description = "PingOne Admin Environment ID"
+  type        = string
+  default     = ""
+}
+
+variable "admin_user_id" {
+  description = "PingOne Environment Admin User ID"
   type        = string
   default     = ""
 }
@@ -24,12 +30,6 @@ variable "target_environment_name" {
 
 variable "target_environment_description" {
   description = "PingOne Target Environment Description"
-  type        = string
-  default     = ""
-}
-
-variable "admin_user_id" {
-  description = "Target Environment Admin User ID"
   type        = string
   default     = ""
 }

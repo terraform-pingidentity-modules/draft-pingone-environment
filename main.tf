@@ -1,5 +1,8 @@
 
 
+#########################################################################
+# PingOne License ID
+#########################################################################
 data "pingone_licenses" "org_licenses" {
   organization_id = var.organization_id
 
@@ -9,6 +12,10 @@ data "pingone_licenses" "org_licenses" {
   }
 }
 
+
+#########################################################################
+# PineOne Environment
+#########################################################################
 resource "pingone_environment" "env_instance" {
   name        = var.target_environment_name
   description = var.target_environment_description
@@ -74,6 +81,10 @@ resource "pingone_environment" "env_instance" {
 
 }
 
+
+#########################################################################
+# PineOne Roles (Identity Data Admin, Environment Admin)
+#########################################################################
 data "pingone_role" "identity_data_admin" {
   name = "Identity Data Admin"
 }
@@ -81,6 +92,10 @@ data "pingone_role" "environment_admin" {
   name = "Environment Admin"
 }
 
+
+#########################################################################
+# PingOne Role Assignment
+#########################################################################
 resource "pingone_role_assignment_user" "identity_data_admin_role" {
   # count                = var.admin_user_id != "" && var.admin_environment_id != "" ? 1 : 0
   environment_id       = var.admin_environment_id
