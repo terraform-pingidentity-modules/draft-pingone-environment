@@ -30,7 +30,7 @@ data "pingone_licenses" "org_licenses" {
 resource "pingone_environment" "env_instance" {
   name        = var.target_environment_name
   description = var.target_environment_description
-  type        = "SANDBOX"
+  type        = var.target_environment_production_type ? "PRODUCTION" : "SANDBOX"
   license_id  = var.license_id != null && var.license_id != "" ? var.license_id : data.pingone_licenses.org_licenses[0].ids[0]
 
   lifecycle {

@@ -60,6 +60,12 @@ variable "target_environment_description" {
   default     = null
 }
 
+variable "target_environment_production_type" {
+  description = "Enables the environment as a Production environment.  This enables features that prevent accidental deletion of an environment and associated data."
+  type = bool
+  default = false
+}
+
 variable "create_authorize" {
   description = "Create the PingOne Authorize Service"
   type        = bool
