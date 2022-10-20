@@ -13,7 +13,7 @@ export TF_VAR_admin_environment_id=$P1_ADMIN_ENV_ID
 export TF_VAR_admin_environment_client_id=$P1_ADMIN_ENV_CLIENT_ID
 export TF_VAR_admin_environment_client_secret=$P1_ADMIN_ENV_CLIENT_SECRET
 export TF_VAR_region=$P1_REGION
-export TF_VAR_license_name=$P1_LICENSE_ID
+export TF_VAR_license_name=$P1_LICENSE_NAME
 ```
 
 Then execute:
