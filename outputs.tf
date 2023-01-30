@@ -1,5 +1,11 @@
 output "environment_id" {
   value = pingone_environment.env_instance.id
+
+  // We want roles to propagate first before the module is considered "done", so we can use it with the DV provider without race condition
+  depends_on = [
+    pingone_role_assignment_user.identity_data_admin_role,
+    pingone_role_assignment_user.environment_admin_role
+  ]
 }
 
 output "default_population_id" {
