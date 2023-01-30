@@ -1,3 +1,8 @@
+locals {
+  use_license_id = (var.license_id != null && var.license_id != "")
+}
+
+
 #########################################################################
 # PineOne Admin Environment
 #########################################################################
@@ -9,7 +14,7 @@ data "pingone_environment" "administrators" {
 # PingOne License ID
 #########################################################################
 data "pingone_licenses" "org_licenses" {
-  count = var.license_name != null && var.license_name != "" ? 1 : 0
+  count = !local.use_license_id ? 1 : 0
 
   organization_id = var.organization_id != null && var.organization_id != "" ? var.organization_id : data.pingone_environment.administrators.organization_id
 
@@ -31,12 +36,12 @@ resource "pingone_environment" "env_instance" {
   name        = var.target_environment_name
   description = var.target_environment_description
   type        = var.target_environment_production_type ? "PRODUCTION" : "SANDBOX"
-  license_id  = var.license_id != null && var.license_id != "" ? var.license_id : data.pingone_licenses.org_licenses[0].ids[0]
+  license_id  = local.use_license_id ? var.license_id : data.pingone_licenses.org_licenses[0].ids[0]
 
   lifecycle {
     precondition {
       condition     = (var.license_id != null && var.license_id != "") || ((var.license_name != null && var.license_name != "") && length(data.pingone_licenses.org_licenses) == 1)
-      error_message = "Ensure one of `license_id` or `license_name` is set.  If using `license_name`, only one license must be returned."
+      error_message = "Ensure one of `license_id` or `license_name` is set in the module parameters.  If using `license_name`, only one license of the same name should exist in the environment.  Licenses can be individually named in the admin console."
     }
   }
 
@@ -133,6 +138,56 @@ resource "pingone_role_assignment_user" "environment_admin_role" {
 }
 
 
+#########################################################################
+# PingOne Custom Domain
+#########################################################################
+resource "pingone_custom_domain" "this" {
+  count = var.custom_domain_name != null && var.custom_domain_name != "" ? 1 : 0
+
+  environment_id = pingone_environment.env_instance.id
+
+  domain_name = var.custom_domain_name
+}
+
+
+#########################################################################
+# PingOne Trusted Email Domain
+#########################################################################
+module "trusted_email_domain" {
+  source = "./modules/trusted-email-domain"
+
+  for_each = toset(var.trusted_email_domains)
+
+  environment_id = pingone_environment.env_instance.id
+
+  trusted_email_domain = each.key
+}
+
+
+#########################################################################
+# Resource data sources
+#########################################################################
+data "pingone_resource" "openid" {
+  environment_id = pingone_environment.env_instance.id
+
+  name = "openid"
+}
+
+data "pingone_resource" "pingone_api" {
+  environment_id = pingone_environment.env_instance.id
+
+  name = "PingOne API"
+}
+
+
+#########################################################################
+# Schema data sources
+#########################################################################
+data "pingone_schema" "user" {
+  environment_id = pingone_environment.env_instance.id
+
+  name = "User"
+}
 
 
 
