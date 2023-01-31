@@ -4,20 +4,13 @@ output "environment_id" {
   // We want roles to propagate first before the module is considered "done", so we can use it with the DV provider without race condition
   depends_on = [
     pingone_role_assignment_user.identity_data_admin_role,
-    pingone_role_assignment_user.environment_admin_role
+    pingone_role_assignment_user.environment_admin_role,
+    time_sleep.wait_5_seconds
   ]
 }
 
 output "default_population_id" {
   value = pingone_environment.env_instance.default_population_id
-}
-
-output "identity_data_admin_role" {
-  value = pingone_role_assignment_user.identity_data_admin_role
-}
-
-output "environment_admin_role" {
-  value = pingone_role_assignment_user.environment_admin_role
 }
 
 output "dns_verification_entries_custom_domain" {
@@ -43,7 +36,7 @@ output "dns_verification_entries_trusted_email_domains" {
 }
 
 output "license_id" {
-  value = pingone_environment.env_instance.license_id
+  value = local.license_id
 }
 
 output "resource_id_openid" {

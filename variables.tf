@@ -1,10 +1,4 @@
 
-variable "organization_id" {
-  description = "PingOne Organization ID - Used to obtain license_id.  If set, will take precidence over the organization ID found from using the `admin_environment_name` parameter."
-  type        = string
-  default     = null
-}
-
 variable "license_id" {
   description = "PingOne License ID to assign to the environment.  If set, will take precidence over the license ID found from using the `license_name` parameter."
   type        = string
@@ -14,6 +8,7 @@ variable "license_id" {
 variable "license_name" {
   description = "PingOne License Name - Used to obtain the `license_id`.  If using `license_name`, only one license of the same name should exist in the environment.  Licenses can be individually named in the admin console."
   type        = string
+  default = null
 }
 
 variable "admin_environment_name" {
@@ -111,4 +106,16 @@ variable "trusted_email_domains" {
   description = "The domains to be included in the `From` address in your emails (e.g., `mydomain.com`)"
   type = list(string)
   default = []
+}
+
+variable "enable_locales" {
+  description = "The list of ISO standard language codes to enable in the environment.  For more information about standard language codes, see [ISO Language Code Table](http://www.lingoes.net/en/translator/langcode.htm)."
+  type = list(string)
+  default = ["en"]
+}
+
+variable "default_locale" {
+  description = "The default locale for the environment."
+  type = string
+  default = "en"
 }
