@@ -23,24 +23,75 @@ variable "admin_environment_id" {
   default     = null
 }
 
-variable "admin_user_id_list" {
-  description = "PingOne Environment Admin User ID"
+# Environment Admin
+variable "role_assignment_environment_admin_user_id_list" {
+  description = "A list of user IDs that should be assigned the `Environment Admin` role scoped to the PingOne environment."
   type        = list(string)
   default     = []
 }
 
-variable "admin_user_assign_identity_admin_role" {
-  description = "Assign the `Identity Data Admin` role to users set in the `admin_user_id_list` parameter."
-  type        = bool
-  default     = true
+# Configuration Read Only
+variable "role_assignment_configuration_read_only_user_id_list" {
+  description = "A list of user IDs that should be assigned the `Configuration Read Only` role scoped to the PingOne environment."
+  type        = list(string)
+  default     = []
 }
 
-variable "admin_user_assign_environment_admin_role" {
-  description = "Assign the `Environment Admin` role to users set in the `admin_user_id_list` parameter."
-  type        = bool
-  default     = true
+# Identity Data Admin
+variable "role_assignment_identity_data_admin_user_id_list" {
+  description = "A list of user IDs that should be assigned the `Identity Data Admin` role scoped to the PingOne environment."
+  type        = list(string)
+  default     = []
 }
 
+# Identity Data Read Only
+variable "role_assignment_identity_data_read_only_user_id_list" {
+  description = "A list of user IDs that should be assigned the `Identity Data Read Only` role scoped to the PingOne environment."
+  type        = list(string)
+  default     = []
+}
+
+# Client Application Developer
+variable "role_assignment_client_application_developer_user_id_list" {
+  description = "A list of user IDs that should be assigned the `Client Application Developer` role scoped to the PingOne environment."
+  type        = list(string)
+  default     = []
+}
+
+# PingFederate Administrator
+variable "role_assignment_pingfederate_administrator_user_id_list" {
+  description = "A list of user IDs that should be assigned the `PingFederate Administrator` role scoped to the PingOne environment."
+  type        = list(string)
+  default     = []
+}
+
+# PingFederate Expression Administrator
+variable "role_assignment_pingfederate_expression_administrator_user_id_list" {
+  description = "A list of user IDs that should be assigned the `PingFederate Expression Administrator` role scoped to the PingOne environment."
+  type        = list(string)
+  default     = []
+}
+
+# PingFederate Crypto Administrator
+variable "role_assignment_pingfederate_crypto_administrator_user_id_list" {
+  description = "A list of user IDs that should be assigned the `PingFederate Crypto Administrator` role scoped to the PingOne environment."
+  type        = list(string)
+  default     = []
+}
+
+# PingFederate User Administrator
+variable "role_assignment_pingfederate_user_administrator_user_id_list" {
+  description = "A list of user IDs that should be assigned the `PingFederate User Administrator` role scoped to the PingOne environment."
+  type        = list(string)
+  default     = []
+}
+
+# PingFederate Auditor
+variable "role_assignment_pingfederate_auditor_user_id_list" {
+  description = "A list of user IDs that should be assigned the `PingFederate Auditor` role scoped to the PingOne environment."
+  type        = list(string)
+  default     = []
+}
 
 variable "target_environment_name" {
   description = "PingOne Target Environment Name"

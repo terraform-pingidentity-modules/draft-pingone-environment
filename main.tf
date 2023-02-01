@@ -116,34 +116,171 @@ resource "pingone_environment" "env_instance" {
 
 
 #########################################################################
-# PineOne Roles (Identity Data Admin, Environment Admin)
+# PingOne Role Assignment - Environment Admin
 #########################################################################
-data "pingone_role" "identity_data_admin" {
-  name = "Identity Data Admin"
-}
 data "pingone_role" "environment_admin" {
   name = "Environment Admin"
 }
 
-
-#########################################################################
-# PingOne Role Assignment
-#########################################################################
-resource "pingone_role_assignment_user" "identity_data_admin_role" {
-  count = var.admin_user_assign_identity_admin_role && length(var.admin_user_id_list) > 0 ? length(var.admin_user_id_list) : 0
+resource "pingone_role_assignment_user" "environment_admin" {
+  for_each = toset(var.role_assignment_environment_admin_user_id_list)
 
   environment_id       = local.admin_environment_id
-  user_id              = var.admin_user_id_list[count.index]
+  user_id              = each.key
+  role_id              = data.pingone_role.environment_admin.id
+  scope_environment_id = pingone_environment.env_instance.id
+}
+
+
+#########################################################################
+# PingOne Role Assignment - Configuration Read Only
+#########################################################################
+data "pingone_role" "configuration_read_only" {
+  name = "Configuration Read Only"
+}
+
+resource "pingone_role_assignment_user" "configuration_read_only" {
+  for_each = toset(var.role_assignment_configuration_read_only_user_id_list)
+
+  environment_id       = local.admin_environment_id
+  user_id              = each.key
+  role_id              = data.pingone_role.configuration_read_only.id
+  scope_environment_id = pingone_environment.env_instance.id
+}
+
+
+#########################################################################
+# PingOne Role Assignment - Identity Data Admin
+#########################################################################
+data "pingone_role" "identity_data_admin" {
+  name = "Identity Data Admin"
+}
+
+resource "pingone_role_assignment_user" "identity_data_admin" {
+  for_each = toset(var.role_assignment_identity_data_admin_user_id_list)
+
+  environment_id       = local.admin_environment_id
+  user_id              = each.key
   role_id              = data.pingone_role.identity_data_admin.id
   scope_environment_id = pingone_environment.env_instance.id
 }
 
-resource "pingone_role_assignment_user" "environment_admin_role" {
-  count = var.admin_user_assign_environment_admin_role && length(var.admin_user_id_list) > 0 ? length(var.admin_user_id_list) : 0
+
+#########################################################################
+# PingOne Role Assignment - Identity Data Read Only
+#########################################################################
+data "pingone_role" "identity_data_read_only" {
+  name = "Identity Data Read Only"
+}
+
+resource "pingone_role_assignment_user" "identity_data_read_only" {
+  for_each = toset(var.role_assignment_identity_data_read_only_user_id_list)
 
   environment_id       = local.admin_environment_id
-  user_id              = var.admin_user_id_list[count.index]
-  role_id              = data.pingone_role.environment_admin.id
+  user_id              = each.key
+  role_id              = data.pingone_role.identity_data_read_only.id
+  scope_environment_id = pingone_environment.env_instance.id
+}
+
+
+#########################################################################
+# PingOne Role Assignment - Client Application Developer
+#########################################################################
+data "pingone_role" "client_application_developer" {
+  name = "Client Application Developer"
+}
+
+resource "pingone_role_assignment_user" "client_application_developer" {
+  for_each = toset(var.role_assignment_client_application_developer_user_id_list)
+
+  environment_id       = local.admin_environment_id
+  user_id              = each.key
+  role_id              = data.pingone_role.client_application_developer.id
+  scope_environment_id = pingone_environment.env_instance.id
+}
+
+
+#########################################################################
+# PingOne Role Assignment - PingFederate Administrator
+#########################################################################
+data "pingone_role" "pingfederate_administrator" {
+  name = "PingFederate Administrator"
+}
+
+resource "pingone_role_assignment_user" "pingfederate_administrator" {
+  for_each = toset(var.role_assignment_pingfederate_administrator_user_id_list)
+
+  environment_id       = local.admin_environment_id
+  user_id              = each.key
+  role_id              = data.pingone_role.pingfederate_administrator.id
+  scope_environment_id = pingone_environment.env_instance.id
+}
+
+
+#########################################################################
+# PingOne Role Assignment - PingFederate Expression Administrator
+#########################################################################
+data "pingone_role" "pingfederate_expression_administrator" {
+  name = "PingFederate Expression Administrator"
+}
+
+resource "pingone_role_assignment_user" "pingfederate_expression_administrator" {
+  for_each = toset(var.role_assignment_pingfederate_expression_administrator_user_id_list)
+
+  environment_id       = local.admin_environment_id
+  user_id              = each.key
+  role_id              = data.pingone_role.pingfederate_expression_administrator.id
+  scope_environment_id = pingone_environment.env_instance.id
+}
+
+
+#########################################################################
+# PingOne Role Assignment - PingFederate Crypto Administrator
+#########################################################################
+data "pingone_role" "pingfederate_crypto_administrator" {
+  name = "PingFederate Crypto Administrator"
+}
+
+resource "pingone_role_assignment_user" "pingfederate_crypto_administrator" {
+  for_each = toset(var.role_assignment_pingfederate_crypto_administrator_user_id_list)
+
+  environment_id       = local.admin_environment_id
+  user_id              = each.key
+  role_id              = data.pingone_role.pingfederate_crypto_administrator.id
+  scope_environment_id = pingone_environment.env_instance.id
+}
+
+
+#########################################################################
+# PingOne Role Assignment - PingFederate User Administrator
+#########################################################################
+data "pingone_role" "pingfederate_user_administrator" {
+  name = "PingFederate User Administrator"
+}
+
+resource "pingone_role_assignment_user" "pingfederate_user_administrator" {
+  for_each = toset(var.role_assignment_pingfederate_user_administrator_user_id_list)
+
+  environment_id       = local.admin_environment_id
+  user_id              = each.key
+  role_id              = data.pingone_role.pingfederate_user_administrator.id
+  scope_environment_id = pingone_environment.env_instance.id
+}
+
+
+#########################################################################
+# PingOne Role Assignment - PingFederate Auditor
+#########################################################################
+data "pingone_role" "pingfederate_auditor" {
+  name = "PingFederate Auditor"
+}
+
+resource "pingone_role_assignment_user" "pingfederate_auditor" {
+  for_each = toset(var.role_assignment_pingfederate_auditor_user_id_list)
+
+  environment_id       = local.admin_environment_id
+  user_id              = each.key
+  role_id              = data.pingone_role.pingfederate_auditor.id
   scope_environment_id = pingone_environment.env_instance.id
 }
 
@@ -198,6 +335,7 @@ data "pingone_schema" "user" {
 
   name = "User"
 }
+
 
 #########################################################################
 # Languages
