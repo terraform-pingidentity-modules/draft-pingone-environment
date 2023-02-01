@@ -1,22 +1,17 @@
-provider "pingone" {
-  client_id      = var.admin_environment_client_id
-  client_secret  = var.admin_environment_client_secret
-  environment_id = var.admin_environment_id
-  region         = var.region
-
-  force_delete_production_type = false
-}
+provider "pingone" {}
 
 ###############################################################################
 # Environment Module
 ###############################################################################
 module "pingone_environment" {
-  source = "../../"
+  source = "terraform-pingidentity-modules/environment/pingone"
 
   target_environment_name = var.target_environment_name
 
   license_name         = var.license_name
-  admin_user_id_list   = data.pingone_users.admin_users.ids
+
+  role_assignment_environment_admin_user_id_list   = data.pingone_users.admin_users.ids
+  role_assignment_identity_data_admin_user_id_list = data.pingone_users.admin_users.ids
 }
 
 ###############################################################################
@@ -33,7 +28,7 @@ data "pingone_users" "admin_users" {
   data_filter {
     name = "email"
     values = [
-      "myuser@bxretail.org"
+      var.admin_email_address
     ]
   }
 }
