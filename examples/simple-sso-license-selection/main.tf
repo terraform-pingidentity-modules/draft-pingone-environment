@@ -4,7 +4,7 @@ provider "pingone" {}
 # Environment Module
 ###############################################################################
 module "pingone_environment_by_license_id" {
-  source = "../../"
+  source = "terraform-pingidentity-modules/environment/pingone"
 
   target_environment_name = var.target_environment_name_by_license_id
 
@@ -12,7 +12,7 @@ module "pingone_environment_by_license_id" {
 }
 
 module "pingone_environment_by_license_name" {
-  source = "../../"
+  source = "terraform-pingidentity-modules/environment/pingone"
 
   target_environment_name = var.target_environment_name_by_license_name
 

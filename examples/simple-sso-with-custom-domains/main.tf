@@ -4,7 +4,7 @@ provider "pingone" {}
 # Environment Module
 ###############################################################################
 module "pingone_environment" {
-  source = "../../"
+  source = "terraform-pingidentity-modules/environment/pingone"
 
   target_environment_name = var.target_environment_name
 
