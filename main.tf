@@ -40,11 +40,6 @@ resource "pingone_environment" "env_instance" {
     }
   }
 
-  default_population {
-    name        = "My Population"
-    description = "My new population for users"
-  }
-
   dynamic "service" {
     for_each = var.create_authorize ? [1] : []
 
@@ -131,9 +126,3 @@ resource "pingone_role_assignment_user" "environment_admin_role" {
   role_id              = data.pingone_role.environment_admin.id
   scope_environment_id = pingone_environment.env_instance.id
 }
-
-
-
-
-
-
